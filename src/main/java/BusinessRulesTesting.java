@@ -1,5 +1,7 @@
 import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -9,49 +11,45 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
 public class BusinessRulesTesting {
+	private WebDriver driver;
+	
+	@Before
+	public void inicializa(){
+		driver = new ChromeDriver();
+		driver.manage().window().setSize(new Dimension(1200, 765));
+		//driver.get("file:///C:/Users/Theo%20Araujo/Desktop/Private%20Theo/QA%20Theo/ESTUDOS/automacoes/Java/campo_treinamento/componentes.html");
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+	}
+	@After
+	public void finaliza() {
+		driver.quit();
+	}
 	@Test
 	public void nameTesting() {
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().setSize(new Dimension(1200, 765));
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.id("elementosForm:cadastrar")).click();
 		Alert alert = driver.switchTo().alert();
 		assertEquals(alert.getText(), "Nome eh obrigatorio");
 		alert.accept();
-		driver.quit();
 	}
 		@Test
 		public void sobrenomeTesting() {
-			WebDriver driver = new ChromeDriver();
-			driver.manage().window().setSize(new Dimension(1200, 765));
-			driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-			
 			driver.findElement(By.id("elementosForm:nome")).sendKeys("Um Nome");
 			driver.findElement(By.id("elementosForm:cadastrar")).click();
 			Alert alert = driver.switchTo().alert();
 			assertEquals(alert.getText(), "Sobrenome eh obrigatorio");
 			alert.accept();	
-			driver.quit();
 		}
 		@Test
-		public void sexTesting() {
-			WebDriver driver = new ChromeDriver();
-			driver.manage().window().setSize(new Dimension(1200, 765));
-			driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-			
+		public void sexTesting() {			
 			driver.findElement(By.id("elementosForm:nome")).sendKeys("Um Nome");
 			driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Um Sobrenome");
 			driver.findElement(By.id("elementosForm:cadastrar")).click();
 			Alert alert = driver.switchTo().alert();
 			assertEquals(alert.getText(), "Sexo eh obrigatorio");
-			driver.quit();
 		}
 		@Test
 		public void favoriteFoodTesting() {
-			WebDriver driver = new ChromeDriver();
-			driver.manage().window().setSize(new Dimension(1200, 765));
-			driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-			
+
 			driver.findElement(By.id("elementosForm:nome")).sendKeys("Um Nome");
 			driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Um Sobrenome");
 			driver.findElement(By.id("elementosForm:sexo:0")).click();			
@@ -60,13 +58,9 @@ public class BusinessRulesTesting {
 			driver.findElement(By.id("elementosForm:cadastrar")).click();
 			Alert alert = driver.switchTo().alert();
 			assertEquals(alert.getText(), "Tem certeza que voce eh vegetariano?");
-			driver.quit();
 		}
 		@Test
 		public void EsportesTesting() {
-			WebDriver driver = new ChromeDriver();
-			driver.manage().window().setSize(new Dimension(1200, 765));
-			driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 			
 			driver.findElement(By.id("elementosForm:nome")).sendKeys("Um Nome");
 			driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Um Sobrenome");
@@ -80,13 +74,9 @@ public class BusinessRulesTesting {
 			String msg = alert.getText();
 			assertEquals(msg, "Voce faz esporte ou nao?");
 			alert.accept();	
-			driver.quit();
 		}
 		@Test
 		public void CadastroOK() {
-			WebDriver driver = new ChromeDriver();
-			driver.manage().window().setSize(new Dimension(1200, 765));
-			driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 			
 			driver.findElement(By.id("elementosForm:nome")).sendKeys("Um Nome");
 			driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Um Sobrenome");
@@ -97,6 +87,5 @@ public class BusinessRulesTesting {
 			driver.findElement(By.id("elementosForm:cadastrar")).click();
 			String valor = driver.findElement(By.cssSelector("#resultado > span")).getText();
 			assertEquals(valor, "Cadastrado!");
-			driver.quit();
 		}
 	}

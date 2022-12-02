@@ -1,4 +1,6 @@
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
@@ -27,14 +29,27 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 //}
 
 public class testeGoogle {
+	private WebDriver driver;
+	
+	@Before
+	public void inicializa(){
+		driver = new ChromeDriver();
+		driver.manage().window().setSize(new Dimension(1200, 765));
+		//driver.get("file:///C:/Users/Theo%20Araujo/Desktop/Private%20Theo/QA%20Theo/ESTUDOS/automacoes/Java/campo_treinamento/componentes.html");
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+	}
+	@After
+	public void finaliza() {
+		driver.quit();
+	}
 	@Test
 	public void teste() {
 		//System.setProperty("webdriver.chrome.driver", "//C:Caminho para o arquivo do Chrome Driver");
-		WebDriver driver = new ChromeDriver();
+		//WebDriver driver = new ChromeDriver();
 		//WebDriver driver = new InternetExplorerDriver();
 		//HtmlUnitDriver driver = new HtmlUnitDriver(BrowserVersion.CHROME);
 		//driver.manage().window().setPosition(new Point(100,100));
-		driver.manage().window().setSize(new Dimension(1200, 765));
+		//driver.manage().window().setSize(new Dimension(1200, 765));
 		//driver.manage().window().maximize();
 		driver.get("http://www.google.com");
 		Assert.assertEquals("Google", driver.getTitle());

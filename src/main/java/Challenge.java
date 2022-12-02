@@ -1,4 +1,6 @@
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -8,12 +10,22 @@ import org.openqa.selenium.support.ui.Select;
 import org.junit.Assert;
 
 public class Challenge {
+	private WebDriver driver;
+	
+	@Before
+	public void inicializa(){
+		driver = new ChromeDriver();
+		driver.manage().window().setSize(new Dimension(1200, 765));
+		//driver.get("file:///C:/Users/Theo%20Araujo/Desktop/Private%20Theo/QA%20Theo/ESTUDOS/automacoes/Java/campo_treinamento/componentes.html");
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+	}
+	@After
+	public void finaliza() {
+		driver.quit();
+	}
 
 	@Test
 	public void FillinaForm(){
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().setSize(new Dimension(1200, 765));
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Theo");
 		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Araujo");
@@ -35,6 +47,5 @@ public class Challenge {
 		Assert.assertEquals("Escolaridade: mestrado", driver.findElement(By.id("descEscolaridade")).getText());
 		Assert.assertEquals("Esportes: Natacao", driver.findElement(By.id("descEsportes")).getText());
 		
-		driver.quit();
 	}
 }
